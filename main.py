@@ -6,10 +6,13 @@ pygame.init()
 SCREEN_WIDTH = 1000
 SCREEN_HEIGHT = 600
 
+CHARACTER_WIDTH = 150
+CHARACTER_HEIGHT = 80
+
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption('Volta\'s Fighters')
 
-player1 = Player(150, 80)
+player1 = Player(CHARACTER_WIDTH, SCREEN_HEIGHT - 50 + CHARACTER_HEIGHT, CHARACTER_WIDTH, CHARACTER_HEIGHT)
 
 running = True
 
@@ -24,7 +27,8 @@ while running:
 
     draw_bg()
 
-    player1.move(SCREEN_WIDTH, SCREEN_HEIGHT - SCREEN_HEIGHT // 8)
+    # Let the player jump until they reach the top of the screen.
+    player1.move(SCREEN_WIDTH, SCREEN_HEIGHT)
     player1.draw(screen)
 
     for event in pygame.event.get():
