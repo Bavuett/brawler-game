@@ -2,6 +2,9 @@ import pygame
 from Player import Player
 from Network import Network
 
+n = Network()
+n.connect()
+
 pygame.init()
 
 SCREEN_WIDTH = 1000
@@ -13,8 +16,7 @@ CHARACTER_HEIGHT = 80
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption('Volta\'s Fighters')
 
-player1 = Player(CHARACTER_WIDTH, SCREEN_HEIGHT - 50 + CHARACTER_HEIGHT, CHARACTER_WIDTH, CHARACTER_HEIGHT)
-n = Network()
+player1 = Player(CHARACTER_WIDTH, SCREEN_HEIGHT - 50 + CHARACTER_HEIGHT, CHARACTER_WIDTH, CHARACTER_HEIGHT, n)
 
 running = True
 
@@ -37,8 +39,6 @@ while running:
         # if player1.rect.colliderect(player2.rect):
         #    player1.rect.x -= player1.SPEED
         #    player2.rect.x += player2.SPEED
-
-    n.send("Hello")
 
     
     for event in pygame.event.get():

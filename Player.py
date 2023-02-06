@@ -1,15 +1,18 @@
 import pygame
 
 class Player:
-    def __init__(self, x, y, width, height):
+    def __init__(self, x, y, width, height, n):
         self.SPEED = 5
         self.WIDTH = width
         self.HEIGHT = height
         self.GRAVITY = 1
         self.JUMP_HEIGHT = -15
 
+        self.n = n
+
         self.vel_y = 0
         self.jumping = False
+        self.selectedDir = False
         
         self.rect = pygame.Rect(x, y, self.HEIGHT, self.WIDTH)
 
@@ -22,14 +25,26 @@ class Player:
         dy = 0
 
         key = pygame.key.get_pressed()
-
+        
         if key[pygame.K_a]:
+            if self.selectedDir == False:
+                self.selectedDir = True
+                self.n.send("left")
+
             dx -= self.SPEED
         if key[pygame.K_d]:
+            if self.selectedDir == False:
+                self.selectedDir = True
+                self.n.send("right")
+
             dx += self.SPEED
         if key[pygame.K_SPACE] and self.jumping == False:
+            self.n.send("jump")
+
             self.jump()
-        
+        else: 
+            self.selectedDir = False
+            
         self.vel_y += self.GRAVITY
         dy += self.vel_y
 
@@ -44,14 +59,6 @@ class Player:
             self.rect.bottom = sc_height - 50
             dy = 0
             self.jumping = False
-            
-        # Attack when pressing J using a hitbox 
-        if key[pygame.K_j]:
-            self.rect.width = 120
-            self.rect.height = 150
-        else: 
-            self.rect.height = self.WIDTH
-            self.rect.width = self.HEIGHT
         
         self.rect.x += dx
         self.rect.y += dy
