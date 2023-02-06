@@ -12,6 +12,10 @@ class Player:
         self.jumping = False
         
         self.rect = pygame.Rect(x, y, self.HEIGHT, self.WIDTH)
+
+    def jump(self):
+        self.jumping = True
+        self.vel_y = self.JUMP_HEIGHT
     
     def move(self, sc_width, sc_height):
         dx = 0
@@ -24,8 +28,7 @@ class Player:
         if key[pygame.K_d]:
             dx += self.SPEED
         if key[pygame.K_SPACE] and self.jumping == False:
-            self.jumping = True
-            self.vel_y = self.JUMP_HEIGHT
+            self.jump()
         
         self.vel_y += self.GRAVITY
         dy += self.vel_y
@@ -42,6 +45,13 @@ class Player:
             dy = 0
             self.jumping = False
             
+        # Attack when pressing J using a hitbox 
+        if key[pygame.K_j]:
+            self.rect.width = 120
+            self.rect.height = 150
+        else: 
+            self.rect.height = self.WIDTH
+            self.rect.width = self.HEIGHT
         
         self.rect.x += dx
         self.rect.y += dy

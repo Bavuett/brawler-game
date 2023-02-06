@@ -1,5 +1,5 @@
 import pygame
-from player import Player
+from Player import Player
 
 pygame.init()
 
@@ -22,7 +22,7 @@ FPS = 60
 def draw_bg():
     screen.fill((0, 0, 0))
 
-while running: 
+while running:
     clock.tick(FPS)
 
     draw_bg()
@@ -31,9 +31,15 @@ while running:
     player1.move(SCREEN_WIDTH, SCREEN_HEIGHT)
     player1.draw(screen)
 
+        # Collision with other player
+        # if player1.rect.colliderect(player2.rect):
+        #    player1.rect.x -= player1.SPEED
+        #    player2.rect.x += player2.SPEED
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+
     pygame.display.update()
 
 pygame.quit()
