@@ -1,3 +1,5 @@
+import socket
+
 class Network:
     def __init__ (self):
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -12,5 +14,10 @@ class Network:
             return self.client.recv(2048).decode()
         except:
             pass
-
-n = Network()
+    
+    def send(self, data):
+        try:
+            self.client.send(str.encode(data))
+            return self.client.recv(2048).decode()
+        except socket.error as e:
+            print(e)
