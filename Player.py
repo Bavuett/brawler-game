@@ -27,16 +27,8 @@ class Player:
         key = pygame.key.get_pressed()
         
         if key[pygame.K_a]:
-            if self.selectedDir == False:
-                self.selectedDir = True
-                self.n.send("left")
-
             dx -= self.SPEED
         if key[pygame.K_d]:
-            if self.selectedDir == False:
-                self.selectedDir = True
-                self.n.send("right")
-
             dx += self.SPEED
         if key[pygame.K_SPACE] and self.jumping == False:
             self.n.send("jump")

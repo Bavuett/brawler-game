@@ -12,8 +12,9 @@ s.listen(2)
 
 print("Waiting for connection...")
 
-def clientthread(conn):
-    reply = ""
+def clientthread(conn, player):
+    conn.send(str.encode("Connnected!"))
+    reply = ''
 
     while True:
         msg = clientsocket.recv(1024)
@@ -26,13 +27,16 @@ def clientthread(conn):
             print(f"Connection from {address} has been terminated!")
             break
 
+
+currentPlayer = 0
 while True:
     clientsocket, address = s.accept()
     print(f"Connection from {address} has been established!")
 
     clientsocket.send(bytes("Welcome to the server!", "utf-8"))
 
-    start_new_thread(clientthread, (clientsocket,))
+    start_new_thread(clientthread, (clientsocket, currentPlayer))
+    currentPlayer += 1
 
 print("Server is shutting down...")
 clientsocket.close()
