@@ -2,49 +2,61 @@ import pygame
 from Player import Player
 from Network import Network
 
-n = Network()
-n.connect()
+def read_pos(str):
+    str = str.split(",")
+    return [int(str[0]), int(str[1])]
 
-pygame.init()
+def make_pos(tup):
+    return str(tup[0]) + "," + str(tup[1])
 
-SCREEN_WIDTH = 1000
-SCREEN_HEIGHT = 600
+def main(): 
+    n = Network()
+    n.connect()
+    startPos = read_pos(n.getPos())
 
-CHARACTER_WIDTH = 150
-CHARACTER_HEIGHT = 80
+    pygame.init()
 
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-pygame.display.set_caption('Volta\'s Fighters')
+    SCREEN_WIDTH = 1000
+    SCREEN_HEIGHT = 600
 
-player1 = Player(CHARACTER_WIDTH, SCREEN_HEIGHT - 50 + CHARACTER_HEIGHT, CHARACTER_WIDTH, CHARACTER_HEIGHT, n)
+    CHARACTER_WIDTH = 150
+    CHARACTER_HEIGHT = 80
 
-running = True
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    pygame.display.set_caption('Volta\'s Fighters')
 
-clock = pygame.time.Clock()
-FPS = 60
+    player1 = Player(startPos[0], startPos[1], CHARACTER_WIDTH, CHARACTER_HEIGHT)
 
-def draw_bg():
-    screen.fill((0, 0, 0))
+    running = True
 
-while running:
-    clock.tick(FPS)
+    clock = pygame.time.Clock()
+    FPS = 60
 
-    draw_bg()
+    def draw_bg():
+        screen.fill((0, 0, 0))
 
-    # Let the player jump until they reach the top of the screen.
-    player1.move(SCREEN_WIDTH, SCREEN_HEIGHT)
-    player1.draw(screen)
+    while running:
+        clock.tick(FPS)
 
-        # Collision with other player
-        # if player1.rect.colliderect(player2.rect):
-        #    player1.rect.x -= player1.SPEED
-        #    player2.rect.x += player2.SPEED
+        draw_bg()
 
-    
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
+        # Let the player jump until they reach the top of the screen.
+        player1.move(SCREEN_WIDTH, SCREEN_HEIGHT)
+        player1.draw(screen)
 
-    pygame.display.update()
+            # Collision with other player
+            # if player1.rect.colliderect(player2.rect):
+            #    player1.rect.x -= player1.SPEED
+            #    player2.rect.x += player2.SPEED
 
-pygame.quit()
+        
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
+        pygame.display.update()
+
+    pygame.quit()
+
+if __name__ == '__main__':
+    main()

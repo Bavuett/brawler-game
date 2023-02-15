@@ -6,11 +6,11 @@ class Network:
         self.server = "127.0.0.1"
         self.port = 5555
         self.addr = (self.server, self.port)
-        self.p = self.connect()
+        self.pos = self.connect()
 
-    def getP(self):
-        return self.p
-
+    def getPos(self):
+        return self.pos
+        
     def connect(self):
         try:
             self.client.connect(self.addr)

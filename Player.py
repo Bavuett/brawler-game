@@ -1,20 +1,19 @@
 import pygame
 
 class Player:
-    def __init__(self, x, y, width, height, n):
+    def __init__(self, x, y, width, height):
         self.SPEED = 5
+        self.START_X = x
+        self.START_Y = y
         self.WIDTH = width
         self.HEIGHT = height
         self.GRAVITY = 1
         self.JUMP_HEIGHT = -15
 
-        self.n = n
-
         self.vel_y = 0
         self.jumping = False
-        self.selectedDir = False
         
-        self.rect = pygame.Rect(x, y, self.HEIGHT, self.WIDTH)
+        self.rect = pygame.Rect(self.START_X, self.START_Y, self.HEIGHT, self.WIDTH)
 
     def jump(self):
         self.jumping = True
@@ -31,11 +30,8 @@ class Player:
         if key[pygame.K_d]:
             dx += self.SPEED
         if key[pygame.K_SPACE] and self.jumping == False:
-            self.n.send("jump")
 
             self.jump()
-        else: 
-            self.selectedDir = False
             
         self.vel_y += self.GRAVITY
         dy += self.vel_y
