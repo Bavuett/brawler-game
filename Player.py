@@ -1,8 +1,10 @@
 import pygame
 
 class Player:
-    def __init__(self, x, y, width, height):
+    def __init__(self, x, y, width, height, sc_width, sc_height):
         self.SPEED = 5
+        self.SCREEN_WIDTH = sc_width
+        self.SCREEN_HEIGHT = sc_height
         self.START_X = x
         self.START_Y = y
         self.WIDTH = width
@@ -41,10 +43,10 @@ class Player:
             self.vel_y = 0
         if self.rect.left < 0:
             self.rect.left = 0
-        if self.rect.right > sc_width:
-            self.rect.right = sc_width
-        if self.rect.bottom + dy > sc_height - 50:
-            self.rect.bottom = sc_height - 50
+        if self.rect.right > self.SCREEN_WIDTH:
+            self.rect.right = self.SCREEN_WIDTH
+        if self.rect.bottom + dy > self.SCREEN_HEIGHT - 50:
+            self.rect.bottom = self.SCREEN_HEIGHT - 50
             dy = 0
             self.jumping = False
         
@@ -53,3 +55,9 @@ class Player:
 
     def draw(self, surface): 
         pygame.draw.rect(surface, (255, 255, 255), self.rect)
+
+    def set_x(self, x):
+        self.rect.x = x
+
+    def set_y(self, y):
+        self.rect.y = y
