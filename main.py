@@ -61,8 +61,8 @@ def draw_bg():
     screen.blit(scaled_bg, (0, 0))
 
 #fighter
-fighter_1 = Fighter(200, 310,LAROCCA_DATA, larocca_sheet, larocca_animation_count)
-fighter_2 = Fighter(700, 310, MICALONE_DATA, micalone_sheet, micalone_animation_count)
+fighter_1 = Fighter(200, 310, False,LAROCCA_DATA, larocca_sheet, larocca_animation_count)
+fighter_2 = Fighter(700, 310, True, MICALONE_DATA, micalone_sheet, micalone_animation_count)
 
 #loop
 run = True
@@ -76,13 +76,17 @@ while run:
     draw_health_bar(fighter_1.health, 20, 20)
     draw_health_bar(fighter_2.health, 580, 20)
 
-    #drawing fighters
-    fighter_1.draw(screen)
-    fighter_2.draw(screen)
+    #update animation
+    fighter_1.update()
+    fighter_2.update()
 
     #movement
     fighter_1.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, fighter_2)
     #fighter_2.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen)
+
+    #drawing fighters
+    fighter_1.draw(screen)
+    fighter_2.draw(screen)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
