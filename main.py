@@ -76,15 +76,15 @@ while run:
     draw_health_bar(fighter_1.health, 20, 20)
     draw_health_bar(fighter_2.health, 580, 20)
 
-    #update animation
-    fighter_1.update()
-    fighter_2.update()
-
     #movement
     fighter_1.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, fighter_2)
     #fighter_2.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen)
 
-    #drawing fighters
+    #update animation
+    fighter_1.update()
+    fighter_2.update()
+
+    #drawing fighters 
     fighter_1.draw(screen)
     fighter_2.draw(screen)
 

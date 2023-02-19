@@ -30,7 +30,6 @@ class Fighter():
                 img_scaled = pygame.transform.scale(temp_img, (self.image_scale * self.size_width, self.image_scale * self.size_height))
                 temp_img_list.append(img_scaled)
             animation_list.append(temp_img_list)
-            print(animation_list)
         return animation_list
 
     def draw(self, surface):
@@ -96,16 +95,14 @@ class Fighter():
         #checking which action the player is doing
         if self.attack_controll == True:
             self.update_action(3)
-            print(self.action)
         elif self.running == True:
             self.update_action(2)
-            print(self.action)
         elif self.jump == True:
             self.update_action(1)
-            print(self.action)
         else:
             self.update_action(0)
-            print(self.action)
+        
+        
     
         ANIMATION_COOLDOWN = 500
         self.image = self.animation_list[self.action][self.frame_index]
@@ -125,6 +122,7 @@ class Fighter():
             self.action = new_action
             self.frame_index = 0
             self.update_time = pygame.time.get_ticks()
+            
 
     def attacking(self,surface, target):
         self.attack_controll = True
