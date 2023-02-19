@@ -25,12 +25,12 @@ def main():
     #character variables
     SCALE = 2
     OFFSET_LAROCCA = [48, 40]
-    LAROCCA_SIZE_WIDTH = 65
-    LAROCCA_SIZE_HEIGHT = 110
+    LAROCCA_SIZE_WIDTH = 70
+    LAROCCA_SIZE_HEIGHT = 120
     LAROCCA_DATA = [LAROCCA_SIZE_WIDTH, LAROCCA_SIZE_HEIGHT, SCALE, OFFSET_LAROCCA]
     OFFSET_MICALONE = [48, 40]
-    MICALONE_SIZE_WIDTH = 65
-    MICALONE_SIZE_HEIGHT = 110
+    MICALONE_SIZE_WIDTH = 70
+    MICALONE_SIZE_HEIGHT = 120
     MICALONE_DATA = [MICALONE_SIZE_WIDTH, MICALONE_SIZE_HEIGHT, SCALE, OFFSET_MICALONE]
 
     #colors
@@ -44,8 +44,15 @@ def main():
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption('Volta\'s Fighters')
 
-    player1 = Player(startPos[0], startPos[1], LAROCCA_DATA, SCREEN_WIDTH, SCREEN_HEIGHT)
-    player2 = Player(0, 0,MICALONE_DATA, SCREEN_WIDTH, SCREEN_HEIGHT)
+    #load sprite
+    larocca_sheet = pygame.image.load("content/larocca_spritesheet.png").convert_alpha()
+    micalone_sheet = pygame.image.load("content/micalone_spritesheet.png").convert_alpha()
+    #find number of sprites in each animation
+    larocca_animation_count = [1,4,4,4]
+    micalone_animation_count = [1,4,4,4]
+
+    player1 = Player(startPos[0], startPos[1], LAROCCA_DATA, SCREEN_WIDTH, SCREEN_HEIGHT,larocca_sheet, larocca_animation_count)
+    player2 = Player(0, 0,MICALONE_DATA, SCREEN_WIDTH, SCREEN_HEIGHT, micalone_sheet, micalone_animation_count)
 
     running = True
 
@@ -76,6 +83,9 @@ def main():
 
         # Let the player jump until they reach the top of the screen.
         player1.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, player2)
+
+        player1.update()
+
         player1.draw(screen)
         
         
