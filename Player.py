@@ -1,27 +1,29 @@
 import pygame
 
 class Player:
-    def __init__(self, x, y, width, height, sc_width, sc_height):
+    def __init__(self, x, y, data, sc_width, sc_height):
         self.SPEED = 5
         self.SCREEN_WIDTH = sc_width
         self.SCREEN_HEIGHT = sc_height
         self.START_X = x
         self.START_Y = y
-        self.WIDTH = width
-        self.HEIGHT = height
+        self.WIDTH = data[0]
+        self.HEIGHT = data[1]
         self.GRAVITY = 1
         self.JUMP_HEIGHT = -15
+        self.HEALTH = 100
+        self.ATTACKING = False
 
         self.vel_y = 0
         self.jumping = False
         
-        self.rect = pygame.Rect(self.START_X, self.START_Y, self.HEIGHT, self.WIDTH)
+        self.rect = pygame.Rect(self.START_X, self.START_Y, self.WIDTH, self.HEIGHT)
 
     def jump(self):
         self.jumping = True
         self.vel_y = self.JUMP_HEIGHT
     
-    def move(self, sc_width, sc_height):
+    def move(self, sc_width, sc_height, surface, target):
         dx = 0
         dy = 0
 
@@ -32,8 +34,10 @@ class Player:
         if key[pygame.K_d]:
             dx += self.SPEED
         if key[pygame.K_SPACE] and self.jumping == False:
-
             self.jump()
+        #attack
+        if key[pygame.K_f]:
+            self.attack(surface, target)
             
         self.vel_y += self.GRAVITY
         dy += self.vel_y
@@ -61,3 +65,10 @@ class Player:
 
     def set_y(self, y):
         self.rect.y = y
+    
+    def attack(self, surface, target):
+        self.ATTACKING = True
+        attacking_rect = pygame.Rect(self.rect.x, self.rect.y, self.rect.width + 50, self.rect.height)
+        if attacking_rect.colliderect(target.rect):
+            target.HEALTH -= 10
+        pygame.draw.rect(surface, (255, 0, 0), attacking_rect)

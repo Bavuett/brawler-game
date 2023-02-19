@@ -7,6 +7,7 @@ server = "127.0.0.1"
 port = 5555
 
 pos = [(100, 400), (850, 400)]
+life = [100, 100]
 
 def read_pos(str):
     str = str.split(",")
@@ -33,7 +34,8 @@ def client_thread(conn, player):
             if not data:
                 print("Disconnected")
                 break
-            
+            elif data == 'life':
+                reply = life
             else:
                 if player == 1:
                     reply = pos[0]

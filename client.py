@@ -14,24 +14,50 @@ def main():
     n.connect()
     startPos = read_pos(n.getPos())
 
-    pygame.init()
+    print(n.send("life"))
 
+    pygame.init()
+    
+    #window
     SCREEN_WIDTH = 1000
     SCREEN_HEIGHT = 600
 
-    CHARACTER_WIDTH = 150
-    CHARACTER_HEIGHT = 80
+    #character variables
+    SCALE = 2
+    OFFSET_LAROCCA = [48, 40]
+    LAROCCA_SIZE_WIDTH = 65
+    LAROCCA_SIZE_HEIGHT = 110
+    LAROCCA_DATA = [LAROCCA_SIZE_WIDTH, LAROCCA_SIZE_HEIGHT, SCALE, OFFSET_LAROCCA]
+    OFFSET_MICALONE = [48, 40]
+    MICALONE_SIZE_WIDTH = 65
+    MICALONE_SIZE_HEIGHT = 110
+    MICALONE_DATA = [MICALONE_SIZE_WIDTH, MICALONE_SIZE_HEIGHT, SCALE, OFFSET_MICALONE]
+
+    #colors
+    WHITE = (255, 255, 255)
+    BLACK = (0, 0, 0)   
+    RED = (255, 0, 0)
+    GREEN = (0, 255, 0)
+    BLUE = (0, 0, 255)
+    YELLOW = (255, 255, 0)
 
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption('Volta\'s Fighters')
 
-    player1 = Player(startPos[0], startPos[1], CHARACTER_WIDTH, CHARACTER_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT)
-    player2 = Player(0, 0, CHARACTER_WIDTH, CHARACTER_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT)
+    player1 = Player(startPos[0], startPos[1], LAROCCA_DATA, SCREEN_WIDTH, SCREEN_HEIGHT)
+    player2 = Player(0, 0,MICALONE_DATA, SCREEN_WIDTH, SCREEN_HEIGHT)
 
     running = True
 
     clock = pygame.time.Clock()
     FPS = 60
+
+    #health bar
+    def draw_health_bar(health, x, y):
+        ratio = health/100
+        pygame.draw.rect(screen, WHITE, (x - 2, y - 2, 404, 34))
+        pygame.draw.rect(screen, RED, (x, y, 400, 30))
+        pygame.draw.rect(screen, GREEN, (x, y, 400*ratio, 30))
 
     def draw_bg():
         screen.fill((0, 0, 0))
@@ -45,9 +71,11 @@ def main():
         clock.tick(FPS)
 
         draw_bg()
+        draw_health_bar(player1.health, 20, 20)
+        draw_health_bar(player2.health, 580, 20)
 
         # Let the player jump until they reach the top of the screen.
-        player1.move(SCREEN_WIDTH, SCREEN_HEIGHT)
+        player1.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, player2)
         player1.draw(screen)
         
         
