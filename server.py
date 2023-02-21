@@ -35,8 +35,6 @@ def client_thread(conn, player):
             if not data:
                 print("Disconnected")
                 break
-            elif data == "life":
-                reply = life
             else:
                 if player == 1:
                     reply = status[0]
