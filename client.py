@@ -2,19 +2,18 @@ import pygame
 from Player import Player
 from Network import Network
 
-def read_pos(str):
+def read_status(str):
     str = str.split(",")
-    return [int(str[0]), int(str[1])]
+    return [int(str[0]), int(str[1]), int(str[2])]
 
 def make_pos(tup):
-    return str(tup[0]) + "," + str(tup[1])
+    return str(tup[0]) + "," + str(tup[1]) + "," + str(tup[2])
 
 def main(): 
     n = Network("127.0.0.1")
     n.connect()
-    startPos = read_pos(n.getPos())
-
-    print(n.send("life"))
+    startPos = read_status(n.getPos())
+    print(startPos)
 
     pygame.init()
     
@@ -45,7 +44,7 @@ def main():
     pygame.display.set_caption('Volta\'s Fighters')
 
     player1 = Player(startPos[0], startPos[1], LAROCCA_DATA, SCREEN_WIDTH, SCREEN_HEIGHT)
-    player2 = Player(0, 0,MICALONE_DATA, SCREEN_WIDTH, SCREEN_HEIGHT)
+    player2 = Player(0, 0, MICALONE_DATA, SCREEN_WIDTH, SCREEN_HEIGHT)
 
     running = True
 
@@ -63,9 +62,10 @@ def main():
         screen.fill((0, 0, 0))
 
     def update_player2():
-        player2pos = read_pos(n.send(make_pos((player1.rect.x, player1.rect.y))))
+        player2pos = read_status(n.send(make_pos((player1.rect.x, player1.rect.y, player1.health))))
         player2.set_x(player2pos[0])
         player2.set_y(player2pos[1])
+        
     
     while running:
         clock.tick(FPS)

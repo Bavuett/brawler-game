@@ -17,6 +17,7 @@ class Player:
         self.vel_y = 0
         self.jumping = False
         
+        self.health = 100
         self.rect = pygame.Rect(self.START_X, self.START_Y, self.WIDTH, self.HEIGHT)
 
     def jump(self):
