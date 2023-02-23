@@ -6,14 +6,14 @@ print("Starting server...")
 server = "127.0.0.1"
 port = 5555
 
-status = [(100, 400, 100), (850, 400, 100)]
+status = [(100, 400, 100, 0), (850, 400, 100, 0)]
 
 def read_status(str):
     str = str.split(",")
-    return [int(str[0]), int(str[1]), int(str[2])]
+    return [int(str[0]), int(str[1]), int(str[2]), int(str[3])]
 
 def make_status(tup):
-    return str(tup[0]) + "," + str(tup[1]) + "," + str(tup[2])
+    return str(tup[0]) + "," + str(tup[1]) + "," + str(tup[2]) + "," + str(tup[3])
 
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -35,8 +35,6 @@ def client_thread(conn, player):
             if not data:
                 print("Disconnected")
                 break
-            elif data == "life":
-                reply = life
             else:
                 if player == 1:
                     reply = status[0]

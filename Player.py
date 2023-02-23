@@ -12,7 +12,7 @@ class Player:
         self.GRAVITY = 1
         self.JUMP_HEIGHT = -15
         self.HEALTH = 100
-        self.ATTACKING = False
+        self.ATTACKING = 0
 
         self.vel_y = 0
         self.jumping = False
@@ -32,13 +32,17 @@ class Player:
         
         if key[pygame.K_a]:
             dx -= self.SPEED
+        if key[pygame.K_e]:
+            self.health -= 10
         if key[pygame.K_d]:
             dx += self.SPEED
         if key[pygame.K_SPACE] and self.jumping == False:
             self.jump()
         #attack
         if key[pygame.K_f]:
-            self.attack(surface, target)
+            self.ATTACKING = 1
+        else: 
+            self.ATTACKING = 0
             
         self.vel_y += self.GRAVITY
         dy += self.vel_y
@@ -54,6 +58,9 @@ class Player:
             self.rect.bottom = self.SCREEN_HEIGHT - 50
             dy = 0
             self.jumping = False
+
+        if self.ATTACKING == 1:
+            self.attack(surface, target)
         
         self.rect.x += dx
         self.rect.y += dy
@@ -67,9 +74,15 @@ class Player:
     def set_y(self, y):
         self.rect.y = y
     
+    def set_health(self, health):
+        self.health = health
+
+    def set_attack(self, attack):
+        self.ATTACKING = attack
+    
     def attack(self, surface, target):
-        self.ATTACKING = True
         attacking_rect = pygame.Rect(self.rect.x, self.rect.y, self.rect.width + 50, self.rect.height)
         if attacking_rect.colliderect(target.rect):
             target.HEALTH -= 10
         pygame.draw.rect(surface, (255, 0, 0), attacking_rect)
+

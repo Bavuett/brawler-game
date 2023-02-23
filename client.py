@@ -4,10 +4,10 @@ from Network import Network
 
 def read_status(str):
     str = str.split(",")
-    return [int(str[0]), int(str[1]), int(str[2])]
+    return [int(str[0]), int(str[1]), int(str[2]), int(str[3])]
 
-def make_pos(tup):
-    return str(tup[0]) + "," + str(tup[1]) + "," + str(tup[2])
+def make_status(tup):
+    return str(tup[0]) + "," + str(tup[1]) + "," + str(tup[2]) + "," + str(tup[3])
 
 def main(): 
     n = Network("127.0.0.1")
@@ -56,17 +56,18 @@ def main():
         ratio = health/100
         pygame.draw.rect(screen, WHITE, (x - 2, y - 2, 404, 34))
         pygame.draw.rect(screen, RED, (x, y, 400, 30))
-        pygame.draw.rect(screen, GREEN, (x, y, 400*ratio, 30))
+        pygame.draw.rect(screen, GREEN, (x, y, 400 * ratio, 30))
 
     def draw_bg():
         screen.fill((0, 0, 0))
 
     def update_player2():
-        player2pos = read_status(n.send(make_pos((player1.rect.x, player1.rect.y, player1.health))))
-        player2.set_x(player2pos[0])
-        player2.set_y(player2pos[1])
-        
-    
+        player2status = read_status(n.send(make_status((player1.rect.x, player1.rect.y, player1.health, player1.ATTACKING))))
+        player2.set_x(player2status[0])
+        player2.set_y(player2status[1])
+        player2.set_health(player2status[2])
+        player2.set_attack(player2status[3])
+
     while running:
         clock.tick(FPS)
 
