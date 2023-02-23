@@ -43,8 +43,13 @@ def main():
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption('Volta\'s Fighters')
 
-    player1 = Player(startPos[0], startPos[1], LAROCCA_DATA, SCREEN_WIDTH, SCREEN_HEIGHT)
-    player2 = Player(0, 0, MICALONE_DATA, SCREEN_WIDTH, SCREEN_HEIGHT)
+    SPRITESHEETS = [
+        pygame.image.load("./content/larocca_spritesheet.png").convert_alpha(), 
+        pygame.image.load("./content/micalone_spritesheet.png").convert_alpha()
+    ]
+
+    player1 = Player(startPos[0], startPos[1], LAROCCA_DATA, SCREEN_WIDTH, SCREEN_HEIGHT, SPRITESHEETS[0])
+    player2 = Player(0, 0, MICALONE_DATA, SCREEN_WIDTH, SCREEN_HEIGHT, SPRITESHEETS[1])
 
     running = True
 
@@ -66,7 +71,9 @@ def main():
         player2.set_x(player2status[0])
         player2.set_y(player2status[1])
         player2.set_health(player2status[2])
-        player2.set_attack(player2status[3])
+        
+        if (player2status[3] == 1):
+            player2.attack(screen, player1)
 
     while running:
         clock.tick(FPS)
