@@ -48,8 +48,8 @@ def main():
         pygame.image.load("./content/micalone_spritesheet.png").convert_alpha()
     ]
 
-    player1 = Player(startPos[0], startPos[1], LAROCCA_DATA, SCREEN_WIDTH, SCREEN_HEIGHT, SPRITESHEETS[0])
-    player2 = Player(0, 0, MICALONE_DATA, SCREEN_WIDTH, SCREEN_HEIGHT, SPRITESHEETS[1])
+    player1 = Player(startPos[0], startPos[1], LAROCCA_DATA, SCREEN_WIDTH, SCREEN_HEIGHT, SPRITESHEETS[0], True)
+    player2 = Player(0, 0, MICALONE_DATA, SCREEN_WIDTH, SCREEN_HEIGHT, SPRITESHEETS[1], False)
 
     running = True
 
